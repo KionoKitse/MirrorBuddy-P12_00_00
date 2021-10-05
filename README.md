@@ -22,5 +22,8 @@ A project to automate power mirrors. The system will detect who is driving based
 </details>
 
 ### Notebook
+<details>
+	<summary>Notes on the project</summary>
  * Best to have ATTiny85 keep track of count in case ATmega328 misses a count
  * Would be nice to see the actual values that got triggered for data monitoring
+ </details>
