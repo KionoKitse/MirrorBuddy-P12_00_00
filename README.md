@@ -19,6 +19,7 @@ A project to automate power mirrors. The system will detect who is driving based
 	<summary>Details of the project history</summary>
 	
 * 2021-10-05 Started the GitHub repository
+* 2021-10-06 OLED test with Pro Mini
 </details>
 
 ### Notebook
