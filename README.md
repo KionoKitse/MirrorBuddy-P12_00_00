@@ -4,7 +4,7 @@ A project to automate power mirrors. The system will detect who is driving based
 ### Hardware in use
  * 1X ATmega328 (Arduino Pro Mini)
  * 1X YX-X801 (low voltage cutoff)
- * 2X ATTiny85 (micro processor)
+ * 2X ATtiny85 (micro processor)
  * 3X L7805CV (voltage regulator)
  * 4X Hall Sensor (what type)
  
@@ -20,6 +20,7 @@ A project to automate power mirrors. The system will detect who is driving based
 	
 * 2021-10-05 Started the GitHub repository
 * 2021-10-06 OLED test with Pro Mini
+* 2021-10-07 Tested transmitting a value from ATtiny85 to ATmega328 over RS485 and displayed with OLED
 </details>
 
 ### Notebook
