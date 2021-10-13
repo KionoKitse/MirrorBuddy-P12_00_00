@@ -1,0 +1,2 @@
+### Description 
+In this test the ATTiny85 reads the value of the potentiometer and converts it to a value between 1-180. Then it passes this value over the software serial to the MAX485. A MAX485 on the other side gets the number and sends it to at ATmega328p which displays the value on an SPI OLED screen.

@@ -6,7 +6,7 @@ A project to automate power mirrors. The system will detect who is driving based
  * 1X YX-X801 (low voltage cutoff)
  * 2X ATtiny85 (micro processor)
  * 3X L7805CV (voltage regulator)
- * 4X Hall Sensor (what type)
+ * 4X OH137 (hall Sensor)
  
  
 ### What's next
