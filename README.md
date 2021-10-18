@@ -21,6 +21,7 @@ A project to automate power mirrors. The system will detect who is driving based
 * 2021-10-05 Started the GitHub repository
 * 2021-10-06 OLED test with Pro Mini
 * 2021-10-07 Tested transmitting a value from ATtiny85 to ATmega328 over RS485 and displayed with OLED
+* 2021-10-13 Building a RS485 HAT to ease testing
 * 2021-10-18 Got the plotter working
 </details>
 
