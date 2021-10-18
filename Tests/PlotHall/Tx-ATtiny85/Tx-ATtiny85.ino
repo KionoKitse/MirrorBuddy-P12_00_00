@@ -23,9 +23,10 @@ void setup()
  
 void loop() 
 { 
-  int data= analogRead(A1);   
-  mySerial.write(data); 
-  delay(50);                           
+  int data= analogRead(A1);
+  byte ByteData= map(data, 0, 1023, 0, 255);     
+  mySerial.write(ByteData); 
+  delay(10);                           
 } 
 
 //Credits

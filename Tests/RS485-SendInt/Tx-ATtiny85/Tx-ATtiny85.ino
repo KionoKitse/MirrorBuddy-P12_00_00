@@ -32,7 +32,7 @@ void loop()
   mySerial.write(txValue);
   //mySerial.write(test); 
   
-  delay(50);                           
+  delay(10);                           
 } 
 
 //Credits

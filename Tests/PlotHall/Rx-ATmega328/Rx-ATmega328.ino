@@ -27,8 +27,8 @@ const int LENGTH=WIDTH;
 //X,Y values
 int Xid;
 int y[LENGTH];
+byte ByteData;
 int data = 0;
- 
 void setup() 
 { 
   //RS485 stuff
@@ -44,10 +44,15 @@ void loop()
 { 
   //Get value from the serial module
   if (Serial.available()) {
-    data = Serial.read();
+    //Get ByteData
+    ByteData = Serial.read();
+    //Convert into an int
+    //data= map(data, 0, 255, 0, 1023); 
+    
 
     //Add data to the points
-    y[Xid] = map(data, 0, 1023, HEIGHT-1, 0);
+    //y[Xid] = map(data, 0, 1023, HEIGHT-1, 0);
+    y[Xid] = map(ByteData, 0, 255, HEIGHT-1, 0);
     Xid++;
     if(Xid >= WIDTH){
       Xid = 0;

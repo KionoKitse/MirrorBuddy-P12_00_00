@@ -21,6 +21,7 @@ A project to automate power mirrors. The system will detect who is driving based
 * 2021-10-05 Started the GitHub repository
 * 2021-10-06 OLED test with Pro Mini
 * 2021-10-07 Tested transmitting a value from ATtiny85 to ATmega328 over RS485 and displayed with OLED
+* 2021-10-18 Got the plotter working
 </details>
 
 ### Notebook
@@ -28,4 +29,5 @@ A project to automate power mirrors. The system will detect who is driving based
 	<summary>Notes on the project</summary>
  * Best to have ATTiny85 keep track of count in case ATmega328 misses a count
  * Would be nice to see the actual values that got triggered for data monitoring
+ * RS485 only send a byte so that makes it challenging for sending an int
  </details>
