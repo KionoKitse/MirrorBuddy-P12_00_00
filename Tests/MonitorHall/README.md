@@ -1,0 +1,2 @@
+### Description 
+In this test the ATTiny85 reads the value of the potentiometer and converts it to a value between 0-255. Then it passes this value over the software serial to the MAX485. A MAX485 on the other side gets the number and converts it back into the 0-1024 range and prints the value to the Serial Monitor.

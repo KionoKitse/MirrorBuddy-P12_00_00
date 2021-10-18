@@ -1,4 +1,4 @@
-//PlotHall > Tx-ATtiny85
+//MonitorHall > Tx-ATtiny85
 /*
  * MAX485 ATTiny85
  * DI     0
@@ -15,6 +15,8 @@
 
 #include <SoftwareSerial.h>
 SoftwareSerial mySerial(1,0);  //rx, tx
+byte txValue;
+byte test = 10;
 
 void setup() 
 { 
@@ -24,12 +26,11 @@ void setup()
  
 void loop() 
 { 
-  int data= analogRead(A1);
+  int data= analogRead(A1); 
   byte ByteData= map(data, 0, 1023, 0, 255);     
-  mySerial.write(ByteData); 
+  mySerial.write(ByteData);   
   delay(10);                           
 } 
 
 //Credits
-//https://create.arduino.cc/projecthub/maurizfa-13216008-arthur-jogy-13216037-agha-maretha-13216095/modbus-rs-485-using-arduino-c055b5
-//https://thewanderingengineer.com/2013/05/05/software-serial-on-the-attiny85/
+//https://forum.arduino.cc/t/rs485-simple-integer-transfer/619544/13
