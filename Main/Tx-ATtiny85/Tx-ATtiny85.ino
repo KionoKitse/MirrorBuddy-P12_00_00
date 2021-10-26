@@ -9,31 +9,45 @@
  * A      5V
  * B      GND
  * C      A1
+ * 
+ * AT85
+ * 1 D5   DI
+ * 2 A3   PotA
+ * 3 A2   PotB
+ * 4 GND  GND
+ * 5 D0   LimitA
+ * 6 D1   N/A
+ * 7 D2   LimitB
+ * 8 VCC  VCC
  */
 
+byte tx = 5;
+byte rx = 1;
+byte PotA = A3;
+byte PotB = A2;
+byte LimA = 0;
+byte LimB = 2;
 
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(1,0);  //rx, tx
+SoftwareSerial mySerial(rx,tx);
 byte txValue;
 byte test = 10;
 
 void setup() 
 { 
-  pinMode(A1, INPUT);
+  pinMode(PotA, INPUT);
+  pinMode(PotB, INPUT);
+  pinMode(LimA, INPUT);
+  pinMode(LimB, INPUT);
   mySerial.begin(9600);
 } 
  
 void loop() 
 { 
-  int data= analogRead(A1); 
-  txValue = data >> 8;  // high byte
-  mySerial.write(txValue); 
-  txValue = data & 0xFF; // low byte
-  mySerial.write(txValue);
-  //mySerial.write(test); 
-  
-  delay(50);                           
+  int ValA = analogRead(PotA);
+  byte ByteData= map(ValA, 0, 1023, 0, 255);  
+  mySerial.write(ByteData); 
+  delay(1000);                           
 } 
 
 //Credits
-//https://forum.arduino.cc/t/rs485-simple-integer-transfer/619544/13
