@@ -21,8 +21,8 @@
  * 8 VCC  VCC
  */
 
-byte tx = 5;
-byte rx = 1;
+byte tx = 1;
+byte rx = 5;
 byte PotA = A3;
 byte PotB = A2;
 byte LimA = 0;
@@ -45,9 +45,16 @@ void setup()
 void loop() 
 { 
   int ValA = analogRead(PotA);
-  byte ByteData= map(ValA, 0, 1023, 0, 255);  
-  mySerial.write(ByteData); 
-  delay(1000);                           
+  int ValB = analogRead(PotB);
+  byte LimValA = digitalRead(LimA);
+  byte LimValB = digitalRead(LimB);
+  byte ByteDataA= map(ValA, 0, 1023, 0, 255);  
+  byte ByteDataB= map(ValB, 0, 1023, 0, 255);  
+  mySerial.write(ByteDataA); 
+  mySerial.write(ByteDataB); 
+  mySerial.write(LimValA); 
+  mySerial.write(LimValB); 
+  delay(10);                           
 } 
 
 //Credits
