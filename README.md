@@ -30,6 +30,7 @@ A project to automate power mirrors. The system will detect who is driving based
 ### Notebook
 <details>
 	<summary>Notes on the project</summary>
+	
 * Best to have ATTiny85 keep track of count in case ATmega328 misses a count
 * Would be nice to see the actual values that got triggered for data monitoring
 * RS485 only send a byte so that makes it challenging for sending an int
@@ -70,12 +71,14 @@ A project to automate power mirrors. The system will detect who is driving based
 
 <details>
 	<summary>Collision avoidance</summary>
+	
 - Collisions are avoided because the ProMini will only be controlling one ATtiny85 at a time so only one node will be transmitting at a time
 - It would be impossible for both nodes to be transmitting since the user can only move one mirror at a time
 </details>
 
 <details>
 	<summary>General thoughts</summary>
+	
 - Having the ProMini being the controller will allow me to make fine adjustments without having to pull the mirrors off
 - limit switches
 	* It could be problematic to use the limit switches since they could easily get water damaged since they are exposed to the elements quite a lot. It would be beneficial not not have to rely on them.
@@ -83,36 +86,3 @@ A project to automate power mirrors. The system will detect who is driving based
 	* The inside limit puts stress on the plastic nuts but the outside limit does not
 	* Perhaps it's better to not use the limits at all
 </details>
-
-### Folders
-<details>
-	<summary>Project folder structure</summary>
-  
-* Database
-	* Sample data for the database
-* Receipts
-	* Images testing receipt reading
-* Tutorials
-	* MySQL: Complete
-		* Simple tutorial for how to interact with MySQL database in JavaScript
-		* .env file should be kept secret 
-		* to build the project run "npm install"
-	* QuaggaJS: In progress
-		* Barcode scanning tutorial
-</details>
-
-
-<details>
-	<summary>General thoughts</summary>
-  
-- Having the ProMini being the controller will allow me to make fine adjustments without having to pull the mirrors off
-- limit switches
-	* It could be problematic to use the limit switches since they could easily get water damaged since they are exposed to the elements quite a lot. It would be beneficial not not have to rely on them.
-	* If I was doing this again I would not have added them since I could easily drive the motors out until I'm sure I'm at the outside limit and then work backwards from there.
-	* The inside limit puts stress on the plastic nuts but the outside limit does not
-	* Perhaps it's better to not use the limits at all
-</details>
-
-
-
-
