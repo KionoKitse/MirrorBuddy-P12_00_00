@@ -38,11 +38,11 @@ A project to automate power mirrors. The system will detect who is driving based
 
 <details>
 	<summary>Overview</summary>
-	- ProMini is the controller
-		* It will detect which diver is in the seat
-		* It will detect if the driver has adjusted the mirror
-		* It will activate the controls to adjust the mirrors to the correct place
-	- ATtiny85 1&2 are the sensors that monitor the position of the mirrors
+ - ProMini is the controller
+  * It will detect which diver is in the seat
+  * It will detect if the driver has adjusted the mirror
+  * It will activate the controls to adjust the mirrors to the correct place
+ - ATtiny85 1&2 are the sensors that monitor the position of the mirrors
 
 
 </details>
