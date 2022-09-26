@@ -83,4 +83,19 @@ A project to automate power mirrors. The system will detect who is driving based
 	* Perhaps it's better to not use the limits at all
 </details>
 
-
+### Folders
+<details>
+	<summary>Project folder structure</summary>
+  
+* Database
+	* Sample data for the database
+* Receipts
+	* Images testing receipt reading
+* Tutorials
+	* MySQL: Complete
+		* Simple tutorial for how to interact with MySQL database in JavaScript
+		* .env file should be kept secret 
+		* to build the project run "npm install"
+	* QuaggaJS: In progress
+		* Barcode scanning tutorial
+</details>
