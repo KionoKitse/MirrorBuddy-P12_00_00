@@ -18,12 +18,13 @@ A project to automate power mirrors. The system will detect who is driving based
 <details>
 	<summary>Details of the project history</summary>
 	
-* 2021-10-05 Started the GitHub repository
-* 2021-10-06 OLED test with Pro Mini
-* 2021-10-07 Tested transmitting a value from ATtiny85 to ATmega328 over RS485 and displayed with OLED
-* 2021-10-13 Building a RS485 HAT to ease testing
-* 2021-10-18 Got the plotter working
-* 2021-10-18 Monitor hall over serial working fine
+ * 2021-10-05 Started the GitHub repository
+ * 2021-10-06 OLED test with Pro Mini
+ * 2021-10-07 Tested transmitting a value from ATtiny85 to ATmega328 over RS485 and displayed with OLED
+ * 2021-10-13 Building a RS485 HAT to ease testing
+ * 2021-10-18 Got the plotter working
+ * 2021-10-18 Monitor hall over serial working fine
+ * 2022-09-26 Working on
 </details>
 
 ### Notebook
@@ -36,8 +37,18 @@ A project to automate power mirrors. The system will detect who is driving based
 </details>
 
 <details>
+	<summary>Overview</summary>
+ * ProMini is the controller
+  * It will detect which diver is in the seat
+  * It will detect if the driver has adjusted the mirror
+  * It will activate the controls to adjust the mirrors to the correct place
+ * ATtiny85 1&2 are the sensors that monitor the position of the mirrors
+
+
+</details>
+
+<details>
 	<summary>Collision avoidance</summary>
-* Overview
  * ProMini is the controller
   * It will detect which diver is in the seat
   * It will detect if the driver has adjusted the mirror
@@ -65,17 +76,6 @@ A project to automate power mirrors. The system will detect who is driving based
   * When the ATtiny detects that it hasn't moved in a while it will use a filter on the collected data to determine the cutoff threshold
   * This data will be sent to the ProMini for logging and the threshold will be set
   * After this data has been sent the ProMini will know that it is okay to move the mirrors into possition
-	
-* How collisions are avoided
- * Collisions are avoided because the ProMini will only be controlling one ATtiny85 at a time so only one node will be transmitting at a time
- * It would be impossible for both nodes to be transmitting since the user can only move one mirror at a time
+
 </details>
-<details>
-	<summary>General thoughts</summary>
-* Having the ProMini being the controller will allow me to make fine adjustments without having to pull the mirrors off
-* limit switches
- * It could be problematic to use the limit switches since they could easily get water damaged since they are exposed to the elements quite a lot. It would be beneficial not not have to rely on them.
- * If I was doing this again I would not have added them since I could easily drive the motors out until I'm sure I'm at the outside limit and then work backwards from there.
- * The inside limit puts stress on the plastic nuts but the outside limit does not
- * Perhaps it's better to not use the limits at all
-</details>
+
