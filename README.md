@@ -99,3 +99,19 @@ A project to automate power mirrors. The system will detect who is driving based
 	* QuaggaJS: In progress
 		* Barcode scanning tutorial
 </details>
+
+
+<details>
+	<summary>General thoughts</summary>
+  
+- Having the ProMini being the controller will allow me to make fine adjustments without having to pull the mirrors off
+- limit switches
+	* Images testing receipt reading
+* Tutorials
+	* MySQL: Complete
+		* Simple tutorial for how to interact with MySQL database in JavaScript
+		* .env file should be kept secret 
+		* to build the project run "npm install"
+	* QuaggaJS: In progress
+		* Barcode scanning tutorial
+</details>
