@@ -38,6 +38,7 @@ A project to automate power mirrors. The system will detect who is driving based
 
 <details>
 	<summary>Overview</summary>
+	
 - ProMini is the controller
 	* It will detect which diver is in the seat
 	* It will detect if the driver has adjusted the mirror
@@ -106,12 +107,12 @@ A project to automate power mirrors. The system will detect who is driving based
   
 - Having the ProMini being the controller will allow me to make fine adjustments without having to pull the mirrors off
 - limit switches
-	* Images testing receipt reading
-* Tutorials
-	* MySQL: Complete
-		* Simple tutorial for how to interact with MySQL database in JavaScript
-		* .env file should be kept secret 
-		* to build the project run "npm install"
-	* QuaggaJS: In progress
-		* Barcode scanning tutorial
+	* It could be problematic to use the limit switches since they could easily get water damaged since they are exposed to the elements quite a lot. It would be beneficial not not have to rely on them.
+	* If I was doing this again I would not have added them since I could easily drive the motors out until I'm sure I'm at the outside limit and then work backwards from there.
+	* The inside limit puts stress on the plastic nuts but the outside limit does not
+	* Perhaps it's better to not use the limits at all
 </details>
+
+
+
+
