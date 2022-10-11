@@ -25,13 +25,24 @@ byte test = 10;
 
 
 //Peak Detection
-#include <PeakDetection.h>
-PeakDetection peakDetection;
+//#include <PeakDetection.h>
+//PeakDetection peakDetection;
 #define hallA A3
 int sensorVal;
 int lastSensorValue;
 double data = 0;
-int peak = 1;
+
+//PeakDetection::begin()
+int index = 0;
+int lag = 30;
+int threshold = 2;
+double influence = 0.5;
+double EPSILON = 0.01;
+int peak;
+
+double dataArray[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+double avgArray[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+double stdArray[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 //Couting
 byte count = 0;
@@ -46,7 +57,7 @@ void setup()
   mySerial.begin(9600);
   
   pinMode(hallA, INPUT);
-  peakDetection.begin();
+  //peakDetection.begin();
   
   //Initial calibration time
   lastSensorValue = analogRead(hallA);
@@ -68,7 +79,8 @@ void loop()
   //Peak detection
   sensorVal = analogRead(hallA);
   data = (double)sensorVal/512-1;
-  peakDetection.add(data);
+  peakAdd(data);
+  //peakDetection.add(data);
   //peak = peakDetection.getPeak();
 
   //Counting
@@ -92,6 +104,47 @@ void loop()
   //byte ByteData= map(data, 0, 1023, 0, 255);     
   //mySerial.write(ByteData);   
   //delay(10);                           
+}
+void peakAdd(double newSample){
+  peak = 0;
+  int i = index % lag; //current index
+  int j = (index + 1) % lag; //next index
+  double deviation = newSample - avgArray[i];
+  if (deviation > threshold * stdArray[i]) {
+    dataArray[j] = influence * newSample + (1.0 - influence) * dataArray[i];
+    peak = 1;
+  }
+  else if (deviation < -threshold * stdArray[i]) {
+    dataArray[j] = influence * newSample + (1.0 - influence) * dataArray[i];
+    peak = -1;
+  }
+   else {
+    dataArray[j] = newSample;
+   }
+   
+  avgArray[j] = getAvg(j, lag);
+  stdArray[j] = getStd(j, lag);
+  index++;
+}
+double getAvg(int start, int len) {
+  double x = 0.0;
+  for (int i = 0; i < len; ++i){
+    x += dataArray[(start + i) % lag];
+  }
+  return x / len;
+}
+double getPoint(int start, int len) {
+  double xi = 0.0;
+  for (int i = 0; i < len; ++i){
+    xi += dataArray[(start + i) % lag] * dataArray[(start + i) % lag];
+  }
+  return xi / len;
+}
+double getStd(int start, int len) {
+  double x1 = getAvg(start, len);
+  double x2 = getPoint(start, len);
+  double powx1 = x1 * x1;
+  double std = x2 - powx1;
 }
 /*
 void SimpleFilter(int level){
