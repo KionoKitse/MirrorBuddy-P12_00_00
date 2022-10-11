@@ -24,6 +24,8 @@ A project to automate power mirrors. The system will detect who is driving based
 * 2021-10-13 Building a RS485 HAT to ease testing
 * 2021-10-18 Got the plotter working
 * 2021-10-18 Monitor hall over serial working fine
+* 2022-10-09 Hall sensor reading from spare housing
+* 2022-10-10 Working on code to count number of rotations
 </details>
 
 ### Notebook
