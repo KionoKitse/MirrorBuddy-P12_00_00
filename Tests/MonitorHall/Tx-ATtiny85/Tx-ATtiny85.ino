@@ -23,143 +23,79 @@ SoftwareSerial mySerial(1,0);  //rx, tx
 byte txValue;
 byte test = 10;
 
+//Settings
+int configTime = 4000;  //Time to aquire max, min values from hall sensors
+int resetTime = 4000;   //If no peaks are detected after this time, the count gets reset
 
-//Peak Detection
-//#include <PeakDetection.h>
-//PeakDetection peakDetection;
-#define hallA A3
-int sensorVal;
-int lastSensorValue;
-double data = 0;
+//Define pins
+#define hallA         A3  //Data pin of hall sensor A
 
-//PeakDetection::begin()
-int index = 0;
-int lag = 30;
-int threshold = 2;
-double influence = 0.5;
-double EPSILON = 0.01;
-int peak;
+//Global variables (Peak Detection)
+int maxValA;
+int minValA;
+int thresholdA;
+int sensorValA;
+bool peakA;
+bool lastPeakA;
+long refTime;
 
-double dataArray[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-double avgArray[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-double stdArray[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-
-//Couting
-byte count = 0;
-int lastState = 0;
-//long lastTime = millis();
-long deltaTime;
-int resetTime = 4000; //If no input for more than 4 seconds the count gets reset
-
+//Global variables (Rotation Counting)
+byte countA;
+long lastCountA;
 
 void setup() 
 { 
+  //Serial
   mySerial.begin(9600);
-  
+
+  //General pin setup
   pinMode(hallA, INPUT);
-  //peakDetection.begin();
-  
-  //Initial calibration time
-  lastSensorValue = analogRead(hallA);
-  
-  /*while(peak != 0){
-    SimpleFilter(4);
-    data = (double)sensorVal/512-1;
-    peakDetection.add(data);
-    peak = peakDetection.getPeak();
-  }*/
-  
+
+  //Variable setup
+  lastPeakA = 0;
+  countA = 10;
+  lastCountA = millis();
+  mySerial.write(countA); 
+
+  //Calculate threshold values
+  maxValA = 0;
+  minValA = 1023;
+  refTime = millis();
+  while((millis()-refTime) < configTime){
+    sensorValA = analogRead(hallA);
+    if(sensorValA > maxValA){
+        maxValA = sensorValA;
+      }
+      if(sensorValA < minValA){
+        minValA = sensorValA;
+      }
+  }
+  thresholdA = ((maxValA-minValA)/2)+minValA;  
+  mySerial.write(9); 
 } 
  
 void loop() 
 { 
-  //Read the hall sensor
-  //SimpleFilter(4);
+  //Read from sensor
+  sensorValA = analogRead(hallA);
 
   //Peak detection
-  sensorVal = analogRead(hallA);
-  data = (double)sensorVal/512-1;
-  peakAdd(data);
-  //peakDetection.add(data);
-  //peak = peakDetection.getPeak();
+  peakA = ( sensorValA > thresholdA ) ? 1 : 0;
 
   //Counting
-  //if ((peak > 0) && (lastState != 1)){
-  //if (peak > 0){
-    //count++;
-    //lastTime=millis();
-  //}
-  //lastState = peak;
+  if ((peakA > 0) && (lastPeakA != 1)){
+    countA++;
+    lastCountA=millis();
+    
+    //Send count 
+    mySerial.write(countA); 
+  }
 
   //Reset count
-  //if((millis()- lastTime)>resetTime){
-    //count=0;
-  //}
+  if((millis()- lastCountA) > resetTime){
+    countA = 0;
+  }   
+}
 
-  //send value
-  mySerial.write(count); 
-  delay(200);
-  count++;
-  //int data= analogRead(hallA); 
-  //byte ByteData= map(data, 0, 1023, 0, 255);     
-  //mySerial.write(ByteData);   
-  //delay(10);                           
-}
-void peakAdd(double newSample){
-  peak = 0;
-  int i = index % lag; //current index
-  int j = (index + 1) % lag; //next index
-  double deviation = newSample - avgArray[i];
-  if (deviation > threshold * stdArray[i]) {
-    dataArray[j] = influence * newSample + (1.0 - influence) * dataArray[i];
-    peak = 1;
-  }
-  else if (deviation < -threshold * stdArray[i]) {
-    dataArray[j] = influence * newSample + (1.0 - influence) * dataArray[i];
-    peak = -1;
-  }
-   else {
-    dataArray[j] = newSample;
-   }
-   
-  avgArray[j] = getAvg(j, lag);
-  stdArray[j] = getStd(j, lag);
-  index++;
-}
-double getAvg(int start, int len) {
-  double x = 0.0;
-  for (int i = 0; i < len; ++i){
-    x += dataArray[(start + i) % lag];
-  }
-  return x / len;
-}
-double getPoint(int start, int len) {
-  double xi = 0.0;
-  for (int i = 0; i < len; ++i){
-    xi += dataArray[(start + i) % lag] * dataArray[(start + i) % lag];
-  }
-  return xi / len;
-}
-double getStd(int start, int len) {
-  double x1 = getAvg(start, len);
-  double x2 = getPoint(start, len);
-  double powx1 = x1 * x1;
-  double std = x2 - powx1;
-}
-/*
-void SimpleFilter(int level){
-  //Read sensor
-  sensorVal = analogRead(hallA);
-  
-  //check if filtering is needed
-  if(abs(sensorVal-lastSensorValue)<level){
-    sensorVal = lastSensorValue;
-  }
-
-  //Record last reading
-  lastSensorValue = sensorVal;
-}
-*/
 //Credits
-//https://github.com/leandcesar/PeakDetection
 //https://forum.arduino.cc/t/rs485-simple-integer-transfer/619544/13
