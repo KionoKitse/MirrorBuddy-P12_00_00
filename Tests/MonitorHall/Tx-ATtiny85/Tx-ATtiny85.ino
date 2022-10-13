@@ -26,7 +26,8 @@ byte test = 10;
 //Settings
 int configTime = 4000;  //Time to aquire max, min values from hall sensors
 int resetTime = 4000;   //If no peaks are detected after this time, the count gets reset
-
+int debounceTime = 500; //Time to ignore input for debounce
+ 
 //Define pins
 #define hallA         A3  //Data pin of hall sensor A
 
@@ -53,8 +54,9 @@ void setup()
 
   //Variable setup
   lastPeakA = 0;
-  countA = 10;
+  countA = 0;
   lastCountA = millis();
+  countA = 66;
   mySerial.write(countA); 
 
   //Calculate threshold values
@@ -70,31 +72,37 @@ void setup()
         minValA = sensorValA;
       }
   }
-  thresholdA = ((maxValA-minValA)/2)+minValA;  
-  mySerial.write(9); 
+  thresholdA = ((maxValA-minValA)/2)+minValA; 
+  countA = 0; 
+  mySerial.write(countA); 
 } 
  
 void loop() 
 { 
-  //Read from sensor
-  sensorValA = analogRead(hallA);
-
-  //Peak detection
-  peakA = ( sensorValA > thresholdA ) ? 1 : 0;
-
-  //Counting
-  if ((peakA > 0) && (lastPeakA != 1)){
-    countA++;
-    lastCountA=millis();
+  //Only read from sensor after the debounce time
+  if((millis()-lastCountA) > debounceTime){
+    //Read from sensor
+    sensorValA = analogRead(hallA);
     
-    //Send count 
-    mySerial.write(countA); 
-  }
+    //Peak detection
+    peakA = ( sensorValA > thresholdA ) ? 1 : 0;
 
-  //Reset count
-  if((millis()- lastCountA) > resetTime){
-    countA = 0;
-  }   
+    //Counting
+    if ((peakA > 0) && (lastPeakA != 1)){
+      countA++;
+      lastCountA=millis();
+      
+      //Send count 
+      mySerial.write(countA); 
+    }
+    lastPeakA = peakA;
+
+    //Reset count
+    if((millis()- lastCountA) > resetTime){
+      countA = 0;
+      mySerial.write(countA);
+    }   
+  } 
 }
 
 //Credits

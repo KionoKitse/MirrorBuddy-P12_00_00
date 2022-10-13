@@ -29,6 +29,7 @@ A project to automate power mirrors. The system will detect who is driving based
 * 2022-10-10 ATtiny with peakdetection and softserial
 * 2022-10-11 Determined that peak detection uses too much memory "Global variables use 489 bytes (95%) of dynamic memory"
 * 2022-10-12 Created a simpler peak detection algorithm 
+* 2022-10-13 Added a debounce setting to MonitorHall it seems to be sending counts as expected 
 </details>
 
 ### Notebook

@@ -27,10 +27,8 @@ void loop()
     if( mySerial.available() )  
     {
       ByteData = mySerial.read();
-      //Serial.println(ByteData);
+      Serial.println(ByteData);
     }
-    Serial.println(ByteData);
-    //Serial.println(analogRead(A1));
 }
 //Credits
 //https://forum.arduino.cc/t/rs485-simple-integer-transfer/619544/13
