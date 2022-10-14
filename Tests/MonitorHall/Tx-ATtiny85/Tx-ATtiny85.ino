@@ -20,8 +20,6 @@
 //MAX485
 #include <SoftwareSerial.h>
 SoftwareSerial mySerial(1,0);  //rx, tx
-byte txValue;
-byte test = 10;
 
 //Settings
 int configTime = 4000;  //Time to aquire max, min values from hall sensors
@@ -30,19 +28,18 @@ int debounceTime = 500; //Time to ignore input for debounce
  
 //Define pins
 #define hallA         A3  //Data pin of hall sensor A
+#define hallB         A2  //Data pin of hall sensor B
 
 //Global variables (Peak Detection)
-int maxValA;
-int minValA;
-int thresholdA;
-int sensorValA;
-bool peakA;
-bool lastPeakA;
 long refTime;
+int maxValA, minValA, thresholdA, sensorValA;
+int maxValB, minValB, thresholdB, sensorValB;
+bool peakA, lastPeakA;
+bool peakB, lastPeakB;
 
 //Global variables (Rotation Counting)
-byte countA;
-long lastCountA;
+byte countA, countB;
+long lastCountA, lastCountB;
 
 void setup() 
 { 
@@ -51,30 +48,39 @@ void setup()
 
   //General pin setup
   pinMode(hallA, INPUT);
+  pinMode(hallB, INPUT);
 
   //Variable setup
   lastPeakA = 0;
+  lastPeakB = 0;
   countA = 0;
+  countB = 0;
   lastCountA = millis();
-  countA = 66;
-  mySerial.write(countA); 
+  lastCountB = millis();
+
 
   //Calculate threshold values
   maxValA = 0;
+  maxValB = 0;
   minValA = 1023;
+  minValB = 1023;
   refTime = millis();
   while((millis()-refTime) < configTime){
     sensorValA = analogRead(hallA);
-    if(sensorValA > maxValA){
-        maxValA = sensorValA;
-      }
-      if(sensorValA < minValA){
-        minValA = sensorValA;
-      }
+	sensorValB = analogRead(hallB);
+    if(sensorValA > maxValA) maxValA = sensorValA;
+	if(sensorValA < minValA) minValA = sensorValA;
+	if(sensorValB > maxValB) maxValB = sensorValB;
+	if(sensorValB < minValB) minValB = sensorValB;
   }
   thresholdA = ((maxValA-minValA)/2)+minValA; 
+  thresholdB = ((maxValB-minValB)/2)+minValB; 
+  
+  //Set counts (note: (0 <= countA < 127) & (127 <= countB < 255))
   countA = 0; 
+  countB = 127; 
   mySerial.write(countA); 
+  mySerial.write(countB); 
 } 
  
 void loop() 
@@ -97,11 +103,36 @@ void loop()
     }
     lastPeakA = peakA;
 
-    //Reset count
-    if((millis()- lastCountA) > resetTime){
-      countA = 0;
-      mySerial.write(countA);
-    }   
+    //Timeout reset count
+    if((millis()- lastCountA) > resetTime) countA = 0; 
+	
+	//Rollover reset count
+	if(countA > 125) countA = 0;
+  } 
+  
+  //Only read from sensor after the debounce time
+  if((millis()-lastCountB) > debounceTime){
+    //Read from sensor
+    sensorValB = analogRead(hallB);
+    
+    //Peak detection
+    peakB = ( sensorValB > thresholdB ) ? 1 : 0;
+
+    //Counting
+    if ((peakB > 0) && (lastPeakB != 1)){
+      countB++;
+      lastCountB=millis();
+      
+      //Send count 
+      mySerial.write(countB); 
+    }
+    lastPeakB = peakB;
+
+    //Timeout reset count
+    if((millis()- lastCountB) > resetTime) countB = 127;
+	
+	//Rollover reset count
+	if(countA > 254) countA = 127;
   } 
 }
 

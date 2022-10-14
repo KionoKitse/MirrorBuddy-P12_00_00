@@ -7,6 +7,7 @@ A project to automate power mirrors. The system will detect who is driving based
 * 2X ATtiny85 (micro processor)
 * 3X L7805CV (voltage regulator)
 * 4X OH137 (hall Sensor)
+* 3X MAX485 (RS485 communication modules)
  
  
 ### What's next
@@ -30,16 +31,25 @@ A project to automate power mirrors. The system will detect who is driving based
 * 2022-10-11 Determined that peak detection uses too much memory "Global variables use 489 bytes (95%) of dynamic memory"
 * 2022-10-12 Created a simpler peak detection algorithm 
 * 2022-10-13 Added a debounce setting to MonitorHall it seems to be sending counts as expected 
+* 2022-10-14 Added code to monitor 2 hall sensors 
 </details>
 
 ### Notebook
 <details>
+	<summary>Next steps</summary>
+* Need to run the MonitorHall program at higher speeds to set the correct debounce time 
+* Need to check that I can read from both sensors at high speeds
+* Test with multiple MAX485 modules on the network
+* ProMini turn on motors then turn off after correct number of rotations achieved 
+</details>
+
+<details>
 	<summary>Notes on the project</summary>
-	
 * Best to have ATTiny85 keep track of count in case ATmega328 misses a count
 * Would be nice to see the actual values that got triggered for data monitoring
 * RS485 only send a byte so that makes it challenging for sending an int
 * Plotting with RS485 seems too slow
+* Would be interesting to see if the MAX485 module could do TX/RX might make calibration easier
 </details>
 
 <details>
