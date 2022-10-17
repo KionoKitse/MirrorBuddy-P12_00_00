@@ -32,6 +32,8 @@ A project to automate power mirrors. The system will detect who is driving based
 * 2022-10-12 Created a simpler peak detection algorithm 
 * 2022-10-13 Added a debounce setting to MonitorHall it seems to be sending counts as expected 
 * 2022-10-14 Added code to monitor 2 hall sensors 
+* 2022-10-16 Built a relay board that can control the motors 
+* 2022-10-17 Working on code to control relay board
 </details>
 
 ### Notebook
