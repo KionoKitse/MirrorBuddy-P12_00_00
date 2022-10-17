@@ -22,9 +22,9 @@
 SoftwareSerial mySerial(1,0);  //rx, tx
 
 //Settings
-int configTime = 4000;  //Time to aquire max, min values from hall sensors
+int configTime = 1000;  //Time to aquire max, min values from hall sensors
 int resetTime = 4000;   //If no peaks are detected after this time, the count gets reset
-int debounceTime = 500; //Time to ignore input for debounce
+int debounceTime = 200; //Time to ignore input for debounce
  
 //Define pins
 #define hallA         A3  //Data pin of hall sensor A
@@ -67,11 +67,11 @@ void setup()
   refTime = millis();
   while((millis()-refTime) < configTime){
     sensorValA = analogRead(hallA);
-	sensorValB = analogRead(hallB);
+	  sensorValB = analogRead(hallB);
     if(sensorValA > maxValA) maxValA = sensorValA;
-	if(sensorValA < minValA) minValA = sensorValA;
-	if(sensorValB > maxValB) maxValB = sensorValB;
-	if(sensorValB < minValB) minValB = sensorValB;
+	  if(sensorValA < minValA) minValA = sensorValA;
+	  if(sensorValB > maxValB) maxValB = sensorValB;
+	  if(sensorValB < minValB) minValB = sensorValB;
   }
   thresholdA = ((maxValA-minValA)/2)+minValA; 
   thresholdB = ((maxValB-minValB)/2)+minValB; 
@@ -106,9 +106,10 @@ void loop()
     //Timeout reset count
     if((millis()- lastCountA) > resetTime) countA = 0; 
 	
-	//Rollover reset count
-	if(countA > 125) countA = 0;
+  	//Rollover reset count
+  	if(countA > 125) countA = 0;
   } 
+
   
   //Only read from sensor after the debounce time
   if((millis()-lastCountB) > debounceTime){
@@ -131,9 +132,10 @@ void loop()
     //Timeout reset count
     if((millis()- lastCountB) > resetTime) countB = 127;
 	
-	//Rollover reset count
-	if(countA > 254) countA = 127;
+	  //Rollover reset count
+	  if(countB > 254) countB = 127;
   } 
+  
 }
 
 //Credits
