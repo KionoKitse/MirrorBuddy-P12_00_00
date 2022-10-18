@@ -39,10 +39,14 @@ A project to automate power mirrors. The system will detect who is driving based
 ### Notebook
 <details>
 	<summary>Next steps</summary>
-* Need to run the MonitorHall program at higher speeds to set the correct debounce time 
-* Need to check that I can read from both sensors at high speeds
-* Test with multiple MAX485 modules on the network
+* Voltage divider to sense mirror controls
+* Test inputs from mirror switch
+* Check for noise with 5V regulator on bench
+* Check voltage stability in the car with regulator
+* Check if we can run without voltage regulators on each mirror
 * ProMini turn on motors then turn off after correct number of rotations achieved 
+* Test with multiple MAX485 modules on the network
+* Build sample module with ATTiny85
 </details>
 
 <details>
@@ -52,6 +56,7 @@ A project to automate power mirrors. The system will detect who is driving based
 * RS485 only send a byte so that makes it challenging for sending an int
 * Plotting with RS485 seems too slow
 * Would be interesting to see if the MAX485 module could do TX/RX might make calibration easier
+* Does rail voltage affect the hall sensors? If so then maybe it would be good to only calibrate them after the voltage has stabilized. 
 </details>
 
 <details>
