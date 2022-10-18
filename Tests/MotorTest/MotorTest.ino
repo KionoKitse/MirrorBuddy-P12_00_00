@@ -33,7 +33,8 @@ int minVal;
 int threshold;
 int peak;
 
-
+int stall = 500;
+int runing = 5000;
 void setup()
 {
   //Serial
@@ -57,72 +58,73 @@ void loop()
   //L_UP
   Serial.println("L_UP");
   SetRelays(L_UP);
-  delay(500);
+  delay(runing);
   ReadSensors();
-  delay(500);
   ClearRelays();
+  delay(stall);
   
   //L_DOWN
   Serial.println("L_DOWN");
   SetRelays(L_DOWN);
-  delay(500);
+  delay(runing);
   ReadSensors();
-  delay(500);
   ClearRelays();
+  delay(stall);
 
   //L_LEFT
   Serial.println("L_LEFT");
   SetRelays(L_LEFT);
-  delay(500);
+  delay(runing);
   ReadSensors();
-  delay(500);
   ClearRelays();
+  delay(stall);
 
   //L_RIGHT
   Serial.println("L_RIGHT");
   SetRelays(L_RIGHT);
-  delay(500);
+  delay(runing);
   ReadSensors();
-  delay(500);
   ClearRelays();
-
+  delay(stall);
+  
   //R_UP
   Serial.println("R_UP");
   SetRelays(R_UP);
-  delay(500);
+  delay(runing);
   ReadSensors();
-  delay(500);
   ClearRelays();
+  delay(stall);
 
   //R_DOWN
   Serial.println("R_DOWN");
   SetRelays(R_DOWN);
-  delay(500);
+  delay(runing);
   ReadSensors();
-  delay(500);
   ClearRelays();
+  delay(stall);
 
   //R_LEFT
   Serial.println("R_LEFT");
   SetRelays(R_LEFT);
-  delay(500);
+  delay(runing);
   ReadSensors();
-  delay(500);
   ClearRelays();
+  delay(stall);
 
   //R_RIGHT
   Serial.println("R_RIGHT");
   SetRelays(R_RIGHT);
-  delay(500);
+  delay(runing);
   ReadSensors();
-  delay(500);
   ClearRelays();
+  delay(stall);
+  
 }
 
-void SetRelays(bool arraySet[5]){
-  for(byte i=0; i<5; i++){
+void SetRelays(bool arraySet[6]){
+  for(byte i=0; i<6; i++){
     digitalWrite(i+4,arraySet[i]);
-    Serial.println(arraySet[i]);
+    Serial.print(arraySet[i]);
     Serial.print(",");
   }
   Serial.println();
