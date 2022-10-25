@@ -34,6 +34,9 @@ A project to automate power mirrors. The system will detect who is driving based
 * 2022-10-14 Added code to monitor 2 hall sensors 
 * 2022-10-16 Built a relay board that can control the motors 
 * 2022-10-17 Working on code to control relay board
+* 2022-10-24 Soldered the relay board into the wiring harness
+* 2022-10-24 There is some issue with the relay board everything shorts to ground when adjusting the switch
+* 2022-10-25 Added a KiCad model to the project
 </details>
 
 ### Notebook
